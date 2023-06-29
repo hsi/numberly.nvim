@@ -66,11 +66,12 @@ require('numberly').setup({
 })
 ```
 
-### Keymap
+### Key mappings
 
 ```lua
 -- ~/.config/nvim/init.lua
 vim.keymap.set('n', '<F6>', require('numberly').next)
+vim.keymap.set('n', '<M-F6>', require('numberly').prev)
 ```
 
 ## ⚖ License

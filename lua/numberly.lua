@@ -51,6 +51,15 @@ function M.next()
 end
 
 
+function M.prev()
+    local window_key = get_current_window_key()
+    local last_item = table.remove(numberings[window_key])
+    table.insert(numberings[window_key], 1, last_item)
+
+    set_numbering()
+end
+
+
 local function filter_numberings(raw_numberings)
     local filtered_numberings = {}
 
