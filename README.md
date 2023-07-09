@@ -43,26 +43,32 @@ Plug 'hsi/numberly.nvim'
 
 ### Per filetype (optional)
 
-The following code makes **numberly** to use both relative and absolute line numberings in Python files after opening them, since `'both'` is the first item in the passed table. Hitting the mapped hotkey (`F6` in the example below) disables any line numbering via the `'none'` setting. Pressing the hotkey again jumps to `'both'` setting, then `'none'`, and so forth.
+The following code makes **numberly** to use both relative and absolute line numberings in Python files after opening them, since `n.BOTH` is the first item in the passed table. Hitting the mapped hotkey (`F6` in the example below) disables any line numbering via the `n.NONE` setting. Pressing the hotkey again jumps to `n.BOTH` setting, then `n.NONE`, and so forth.
 
 ```lua
 -- ~/.config/nvim/after/ftplugin/python.lua
-require('numberly').setup({
-    'both',
-    'none',
+local numberly = require('numberly')
+local n = numberly.Numberings
+
+numberly.setup({
+    n.BOTH,
+    n.NONE,
 })
 ```
 
 ### Default (optional)
 
-It's possible to set a default order of line numberings for unknown filetypes as well. Here when Neovim opens a file without any filetype, the `'none'` setting is activated first. By hitting the hotkey, it'll set relative line numbering only, then absolute line numbering only, and on the third hotkey hit it jumps back to the `'none'` setting, where we started.
+It's possible to set a default order of line numberings for unknown filetypes as well. Here when Neovim opens a file without any filetype, the `n.NONE` setting is activated first. By hitting the hotkey, it'll set relative line numbering only, then absolute line numbering only, and on the third hotkey hit it jumps back to the `n.NONE` setting, where we started.
 
 ```lua
 -- ~/.config/nvim/init.lua
-require('numberly').setup({
-    'none',
-    'relative',
-    'absolute',
+local numberly = require('numberly')
+local n = numberly.Numberings
+
+numberly.setup({
+    n.NONE,
+    n.RELATIVE,
+    n.ABSOLUTE,
 })
 ```
 
