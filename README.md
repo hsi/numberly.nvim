@@ -11,7 +11,7 @@ Set the desired line numbering quickly, even if it differs by filetype.
 
 ## ⚡ Requirements
 
-- Neovim 0.5.0
+- Neovim 0.7.0
 
 ## 💾 Installation
 
