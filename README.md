@@ -18,25 +18,41 @@ Set the desired line numbering quickly, even if it differs by filetype.
 ### Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 
 ```lua
-{ 'hsi/numberly.nvim' },
+-- ~/.config/nvim/lua/plugins/numberly.lua
+return {
+    'hsi/numberly.nvim',
+    tag = 'stable',
+}
+```
+
+**or**
+```lua
+-- ~/.config/nvim/init.lua
+{
+    'hsi/numberly.nvim',
+    tag = 'stable',
+}
 ```
 
 ### Using [packer.nvim](https://github.com/wbthomason/packer.nvim)
 
 ```lua
-use 'hsi/numberly.nvim'
+use {
+    'hsi/numberly.nvim',
+    tag = 'stable',
+}
 ```
 
-### Using [Dein.vim](https://github.com/Shougo/dein.vim)
+### Using [dein.vim](https://github.com/Shougo/dein.vim)
 
 ```vim
-call dein#add('hsi/numberly.nvim')
+call dein#add('hsi/numberly.nvim', { 'rev': 'stable' })
 ```
 
 ### Using [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```vim
-Plug 'hsi/numberly.nvim'
+Plug 'hsi/numberly.nvim', { 'tag': 'stable' }
 ```
 
 ## 🚀 Usage
