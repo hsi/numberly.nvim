@@ -7,6 +7,7 @@ Set the desired line numbering quickly, even if it differs by filetype.
 - Fast switching among line numbering combinations at will via a hotkey.
 - Freely combine absolute/relative line numbering options in ordered sets.
 - Ability to use different line numbering sets per filetype.
+- Each window respects others' line numbering order for the same buffer too.
 - Can define a default line numbering set for unknown filetypes.
 
 ## ⚡ Requirements

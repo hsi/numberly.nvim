@@ -7,34 +7,63 @@ M.Numberings = {
     BOTH = 3,
 }
 
-local numberings = {}
+local function get_buffer_numberings()
+    local window_id = vim.api.nvim_get_current_win()
+    local window_numberings = vim.w[window_id].numberings
 
-local function get_current_window_key()
-    return tostring(vim.api.nvim_get_current_win())
+    if window_numberings ~= nil then
+        return window_numberings
+    end
+
+    local buffer_id = vim.api.nvim_get_current_buf()
+    local buffer_numberings = vim.b[buffer_id].numberings
+    local found = nil
+
+    for i = 1, #buffer_numberings do
+        if buffer_numberings[i].number == vim.o.number and
+            buffer_numberings[i].relativenumber == vim.o.relativenumber then
+            found = i
+            break
+        end
+    end
+    if #buffer_numberings > 1 and found > 1 then
+        return {
+            unpack(buffer_numberings, found, #buffer_numberings),
+            unpack(buffer_numberings, 1, found - 1),
+        }
+    else
+        return buffer_numberings
+    end
 end
 
 
 local function set_numbering()
-    local window_key = get_current_window_key()
+    local window_id = vim.api.nvim_get_current_win()
 
-    vim.o.number = numberings[window_key][1].number
-    vim.o.relativenumber = numberings[window_key][1].relativenumber
+    vim.o.number         = vim.w[window_id].numberings[1].number
+    vim.o.relativenumber = vim.w[window_id].numberings[1].relativenumber
 end
 
 
 function M.next()
-    local window_key = get_current_window_key()
-    local first_item = table.remove(numberings[window_key], 1)
-    table.insert(numberings[window_key], first_item)
+    local window_id = vim.api.nvim_get_current_win()
+    local numberings = get_buffer_numberings()
+
+    local first_item = table.remove(numberings, 1)
+    table.insert(numberings, first_item)
+    vim.w[window_id].numberings = numberings
 
     set_numbering()
 end
 
 
 function M.prev()
-    local window_key = get_current_window_key()
-    local last_item = table.remove(numberings[window_key])
-    table.insert(numberings[window_key], 1, last_item)
+    local window_id = vim.api.nvim_get_current_win()
+    local numberings = get_buffer_numberings()
+
+    local last_item = table.remove(numberings)
+    table.insert(numberings, 1, last_item)
+    vim.w[window_id].numberings = numberings
 
     set_numbering()
 end
@@ -60,8 +89,11 @@ end
 function M.setup(raw_numberings)
     if type(raw_numberings) ~= 'table' then return end
 
-    local window_key = get_current_window_key()
-    numberings[window_key] = filter_numberings(raw_numberings)
+    local buffer_id = vim.api.nvim_get_current_buf()
+    local window_id = vim.api.nvim_get_current_win()
+
+    vim.b[buffer_id].numberings = filter_numberings(raw_numberings)
+    vim.w[window_id].numberings = vim.b[buffer_id].numberings
 
     set_numbering()
 end
